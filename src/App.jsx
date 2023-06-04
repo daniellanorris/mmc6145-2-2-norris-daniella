@@ -17,26 +17,29 @@ export default function App({ }) {
   } = useTimer();
 
   const [bestTime, setBestTime] = useState(0)
-
-
-  console.log(useTimer.timerId)
-  const previousTime = time
-
+ 
+  const [previousTime, setPreviousTime] = useState(0)
 
   function onGameStart() {
-    timerReset()
     timerStart()
+    
+    
   }
 
   function onGameEnd() {
-    timerStop()
-    if (bestTime > previousTime) {
-      setBestTime()
+    timerStop();
+    timerReset();
+  
+    if (previousTime) {
+      setPreviousTime(time);
     }
-    if (bestTime === 0) {
-      setBestTime(previousTime)
+  
+    if (bestTime === 0 || time < bestTime) {
+      setBestTime(time);
+      setPreviousTime(time)
     }
-    return { previousTime, bestTime }
+  
+    return { previousTime, bestTime };
   }
   const cardTexts = [
     "Bunny 🐰",
